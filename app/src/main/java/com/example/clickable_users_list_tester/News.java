@@ -8,4 +8,12 @@ public class News {
         this.heading = heading;
         this.titleImage = titleImage;
     }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public int getTitleImage() {
+        return titleImage;
+    }
 }

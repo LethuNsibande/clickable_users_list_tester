@@ -4,38 +4,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class NewsDetailsFragment extends Fragment {
-    public static final String ARG_POSITION = "position";
-
-    public static NewsDetailsFragment newInstance(int position) {
-        NewsDetailsFragment fragment = new NewsDetailsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POSITION, position);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private TextView newsHeading;
+    private ImageView imageResourceID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_details, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_news_details, container, false);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        imageResourceID = view.findViewById(R.id.imageView);
+        newsHeading = view.findViewById(R.id.titleTextView);
 
         Bundle args = getArguments();
         if (args != null) {
-            int position = args.getInt(ARG_POSITION);
-            // Use the position to display the corresponding item details in the fragment
-            // Update the fragment UI with the details of the clicked item
+            String userName = args.getString("userName");
+            int userImageResource = args.getInt("userImage");
+
+            newsHeading.setText(userName);
+            imageResourceID.setImageResource(userImageResource);
         }
+
+        return view;
     }
 }

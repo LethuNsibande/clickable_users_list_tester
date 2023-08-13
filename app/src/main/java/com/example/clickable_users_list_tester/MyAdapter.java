@@ -1,6 +1,7 @@
 package com.example.clickable_users_list_tester;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             titleImage = itemView.findViewById(R.id.title_image);
             tvHeading = itemView.findViewById(R.id.tvHeading);
 

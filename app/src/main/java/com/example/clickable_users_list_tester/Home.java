@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,15 +44,24 @@ public class Home extends Fragment {
         myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, NewsDetailsFragment.newInstance(position));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (position != RecyclerView.NO_POSITION) {
+                    News news = newsArrayList.get(position);
+
+                    // Open NewsDetailsFragment and pass user data
+                    NewsDetailsFragment newsDetailsFragment = new NewsDetailsFragment();
+                    Bundle args = new Bundle();
+                    args.putString("userName", news.getHeading());
+                    args.putInt("userImage", news.getTitleImage());
+                    newsDetailsFragment.setArguments(args);
+
+                    // Replace the current fragment with NewsDetailsFragment
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame_layout, newsDetailsFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
         });
-
-        myAdapter.notifyDataSetChanged();
     }
 
     private void dataInitialize() {
@@ -87,7 +94,7 @@ public class Home extends Fragment {
         };
 
         for (int i = 0; i < newsHeading.length; i++) {
-            News news = new News(newsHeading[1], imageResourceID[i]);
+            News news = new News(newsHeading[i], imageResourceID[i]);
             newsArrayList.add(news);
         }
     }
